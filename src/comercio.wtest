@@ -1,0 +1,42 @@
+import remeras.*	
+import pedidosysucursales.*
+
+describe "un comercio"{
+	const remeraLG40 = new Lisa (talle=40,color="gris")
+	const remeraLG42 = new Lisa (talle=42,color="gris")
+	const remeraLV40 = new Lisa (talle=40,color="verde")
+	const remeraLV42 = new Lisa (talle=42,color="verde")
+	const remeraBB441 = new Bordada (talle=44,color="blanco",cantColores=1)
+	const remeraBB444 = new Bordada (talle=44,color="blanco",cantColores=4)
+	const remeraSG= new Sublimada (talle=42,color="gris",altoDibujo=10,anchoDibujo=15,derechosAutor=100)
+    const flores = new Sucursal (pedidos=#{},descuentoDesde=10)
+    const avellaneda = new Sucursal (pedidos=#{},descuentoDesde=3)
+    const pedido1 = new Pedido (cantRemeras=5,modelo=remeraLG42,sucursal=null)
+    const pedido2 = new Pedido (cantRemeras=4,modelo=remeraSG,sucursal=null)
+    
+    
+    test "precios x modelo"{
+    	assert.equals(80, remeraLG40.costo())
+    	assert.equals(100, remeraLG42.costo())
+    	assert.equals(88, remeraLV40.costo())
+    	assert.equals(110, remeraLV42.costo())
+    	assert.equals(120, remeraBB441.costo())
+    	assert.equals(140, remeraBB444.costo())
+    	assert.equals(275, remeraSG.costo())
+    }
+    
+    test "precios x pedido en flores"{
+    	pedido1.sucursal(flores)
+    	assert.equals(500,pedido1.precio())
+    	pedido2.sucursal(flores)
+    	assert.equals(1100,pedido2.precio())
+    	
+    }
+    test "precios x pedido en avellaneda"{
+    	pedido1.sucursal(avellaneda)
+    	assert.equals(450,pedido1.precio())
+    	pedido2.sucursal(avellaneda)
+    	assert.equals(880,pedido2.precio())
+    }
+
+}
